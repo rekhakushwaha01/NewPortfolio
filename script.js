@@ -1,5 +1,37 @@
 //about
+ const lines = ["Hello World! Let's write some magic.", "Eat. Sleep. Code. Repeat.", "I turn coffee into code"]; // Lines to display
+        const typewriterElement = document.querySelector('.typewriter');
+        let currentLine = 0; // Index of the current line
+        let charIndex = 0; // Index of the current character
+        let isErasing = false; // State for erasing
 
+        function typeEffect() {
+            const currentText = lines[currentLine];
+
+            if (isErasing) {
+                // Erase characters
+                charIndex--;
+                typewriterElement.textContent = currentText.slice(0, charIndex);
+                if (charIndex === 0) {
+                    isErasing = false; // Switch to typing
+                    currentLine = (currentLine + 1) % lines.length; // Move to the next line
+                }
+            } else {
+                // Type characters
+                charIndex++;
+                typewriterElement.textContent = currentText.slice(0, charIndex);
+                if (charIndex === currentText.length) {
+                    isErasing = true; // Start erasing after typing
+                }
+            }
+
+            // Adjust typing/erasing speed
+            const speed = isErasing ? 50 : 100; // Faster erasing
+            setTimeout(typeEffect, speed);
+        }
+
+        // Start the typewriter effect
+        typeEffect();
 var scales = [{ scale: 1.6 }, { scale: 0.2 }, { scale: 1 }];
 
 gsap.to('.get', {
